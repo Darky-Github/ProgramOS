@@ -1,0 +1,46 @@
+
+---
+
+### 2. **`.gitignore`**:
+The `.gitignore` file helps you avoid committing unnecessary or sensitive files to the repository.
+
+#### Example:
+```gitignore
+# System files
+.DS_Store
+
+# Editor files
+.idea/
+.vscode/
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Compiled binaries
+*.o
+*.out
+*.exe
+
+# Docker image cache
+**/.dockerignore
+
+# Build artifacts
+*.dSYM
+*.class
+*.jar
+*.tar
+*.gz
+*.zip
+
+# Node.js modules
+node_modules/
+npm-debug.log*
+
+# Secrets and environment files
+*.env
+*.secret
