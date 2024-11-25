@@ -1,42 +1,60 @@
-# Base image
-FROM debian:stable-slim
+# Use Ubuntu "devel" branch for unstable releases
+FROM ubuntu:devel
 
-# Maintainer metadata
-LABEL maintainer="yourname@example.com"
+# Set non-interactive frontend for apt-get
+ENV DEBIAN_FRONTEND=noninteractive
 
-# Set working directory
-WORKDIR /programos
-
-# Update system and install tools
+# Update and install essential tools
 RUN apt-get update && apt-get install -y \
+    build-essential \
+    python3 python3-pip \
+    ruby-full \
+    perl \
+    git \
+    curl \
+    wget \
+    lynx \
+    default-jdk \
+    nodejs npm \
     nano \
     vim \
     emacs \
     micro \
-    build-essential \
-    curl \
-    git \
-    wget \
-    man \
-    # Install additional code editors
     joe \
     ne \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    htop \
+    openssh-client \
+    software-properties-common \
+    libglib2.0-bin \
+    libnss3 \
+    libxss1 \
+    xdg-utils \
+    && apt-get clean
 
-# Install Kilo (custom terminal editor written in C)
-RUN git clone https://github.com/antirez/kilo.git /kilo && \
-    cd /kilo && \
-    make && \
-    cp kilo /usr/local/bin/ && \
-    cd / && rm -rf /kilo
+# Install C# and .NET Core SDK
+RUN wget https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb && \
+    dpkg -i packages-microsoft-prod.deb && \
+    apt-get update && \
+    apt-get install -y dotnet-sdk-6.0
 
-# Create directories for usage
-RUN mkdir -p /programos/files /programos/workspaces
+# Add VS Code installation support
+RUN curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/microsoft.gpg && \
+    add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" && \
+    apt-get update && \
+    apt-get install -y code
 
-# Expose port if necessary
-EXPOSE 8080
+# Add ability to install GUI apps (e.g., taskbar simulation)
+RUN apt-get install -y \
+    x11-apps \
+    fluxbox \
+    tint2
 
-# Default command
-CMD ["bash"]
+# Create directories for programming projects
+RUN mkdir -p /workspace/{python,ruby,perl,c,cplusplus,cs,java,javascript}
 
+# Add a taskbar simulation script (using tint2)
+COPY taskbar.sh /usr/local/bin/taskbar
+RUN chmod +x /usr/local/bin/taskbar
+
+# Set the default command to launch the taskbar and Fluxbox
+CMD ["/usr/local/bin/taskbar"]
