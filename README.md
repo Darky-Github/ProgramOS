@@ -1,45 +1,19 @@
-# ProgramOS
+# ProgramOS Lite Edition
 
-**ProgramOS** is a minimal, text-based operating system optimized for programmers. It is designed to run inside a Docker container and comes pre-installed with essential programming tools and terminal-based text editors.
+**ProgramOS Lite Edition** is a fast, lightweight, and stable text-based OS. It is optimized for developers who need essential tools for C, C++, and C# development in a minimalist environment.
 
 ## Features
-- Lightweight and optimized for programming.
-- Includes the following terminal-based text editors:
-  - Nano
-  - Vim
-  - Emacs
-  - Micro
-  - Joe
-  - Ne (Nice Editor)
-  - Kilo (Tiny C-based editor)
-- Custom commands for file system management:
-  - `mkdir`: Create directories.
-  - `cf`: Create blank files (requires an extension).
-  - `cd`: Change directories.
-  - `ls`: List files and directories.
+- Lightweight and quick to run.
+- Editors: vim, neovim, nano.
+- Programming languages supported:
+  - C and C++: Compilers included (gcc, g++).
+  - C#: Lightweight .NET Core Runtime.
+- Pre-configured project directories.
 
 ## Installation
 
-### Prerequisites
-Ensure Docker is installed on your system. You can download Docker from [here](https://www.docker.com/).
-
 ### Build the Docker Image
-Clone this repository and navigate to the directory containing the `Dockerfile`. Then run:
+Clone the repository and navigate to the Lite version directory. Then run:
 ```bash
-docker build -t programos .
-```
-
-### Run the Docker contianer
-After building the image, run:
-```bash
-docker run -it programos
-```
-
-### Remark
-If you use sudo docker [] then use:
-```bash
-sudo docker build -t programos .
-```
-```bash
-sudo docker run -it programos
+docker build -t programos-lite .
 ```
