@@ -1,42 +1,37 @@
-# Base image
-FROM debian:stable-slim
+# Use Ubuntu as base image
+FROM ubuntu:latest
 
-# Maintainer metadata
-LABEL maintainer="yourname@example.com"
+# Set environment variables to disable interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
 
-# Set working directory
-WORKDIR /programos
+# Update and install necessary packages
+RUN apt-get update && \
+    apt-get install -y \
+    xfce4 xfce4-goodies \
+    vim neovim nano \
+    sublime-text \
+    code \
+    geany \
+    wine64 wine32 \
+    libreoffice \
+    gnome-software \
+    rclone \
+    && apt-get clean
 
-# Update system and install tools
-RUN apt-get update && apt-get install -y \
-    nano \
-    vim \
-    emacs \
-    micro \
-    build-essential \
-    curl \
-    git \
-    wget \
-    man \
-    # Install additional code editors
-    joe \
-    ne \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# Install GNOME extensions (if using GNOME)
+RUN apt-get install -y gnome-shell-extension-dash-to-dock
 
-# Install Kilo (custom terminal editor written in C)
-RUN git clone https://github.com/antirez/kilo.git /kilo && \
-    cd /kilo && \
-    make && \
-    cp kilo /usr/local/bin/ && \
-    cd / && rm -rf /kilo
+# Set up the desktop environment
+RUN echo "startxfce4" > ~/.xinitrc
 
-# Create directories for usage
-RUN mkdir -p /programos/files /programos/workspaces
+# Set up Wine for Windows apps (optional)
+RUN winecfg
 
-# Expose port if necessary
-EXPOSE 8080
+# Set up Rclone for cloud storage (Google Drive, OneDrive)
+# Rclone configuration should be done manually by the user
 
-# Default command
-CMD ["bash"]
+# Expose necessary ports for X11 (for GUI) or VNC if needed
+EXPOSE 5900
 
+# Default command to run the desktop environment
+CMD ["startxfce4"]
