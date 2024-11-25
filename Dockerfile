@@ -1,42 +1,29 @@
-# Base image
-FROM debian:stable-slim
+# Use Ubuntu LTS as the base image for stability
+FROM ubuntu:lts
 
-# Maintainer metadata
-LABEL maintainer="yourname@example.com"
+# Set non-interactive frontend for apt-get
+ENV DEBIAN_FRONTEND=noninteractive
 
-# Set working directory
-WORKDIR /programos
-
-# Update system and install tools
+# Update and install essential tools
 RUN apt-get update && apt-get install -y \
-    nano \
-    vim \
-    emacs \
-    micro \
     build-essential \
+    vim \
+    neovim \
+    nano \
+    gcc \
+    g++ \
     curl \
-    git \
     wget \
-    man \
-    # Install additional code editors
-    joe \
-    ne \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get clean
 
-# Install Kilo (custom terminal editor written in C)
-RUN git clone https://github.com/antirez/kilo.git /kilo && \
-    cd /kilo && \
-    make && \
-    cp kilo /usr/local/bin/ && \
-    cd / && rm -rf /kilo
+# Install C# Runtime (lightweight .NET Core)
+RUN wget https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb && \
+    dpkg -i packages-microsoft-prod.deb && \
+    apt-get update && \
+    apt-get install -y aspnetcore-runtime-6.0
 
-# Create directories for usage
-RUN mkdir -p /programos/files /programos/workspaces
+# Set up basic working directories for projects
+RUN mkdir -p /workspace/{c,cplusplus,cs}
 
-# Expose port if necessary
-EXPOSE 8080
-
-# Default command
+# Add a default command to keep the container running
 CMD ["bash"]
-
