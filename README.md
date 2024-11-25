@@ -27,3 +27,19 @@ Ensure Docker is installed on your system. You can download Docker from [here](h
 Clone this repository and navigate to the directory containing the `Dockerfile`. Then run:
 ```bash
 docker build -t programos .
+```
+
+### Run the Docker contianer
+After building the image, run:
+```bash
+docker run -it programos
+```
+
+### Remark
+If you use sudo docker [] then use:
+```bash
+sudo docker build -t programos .
+```
+```bash
+sudo docker run -it programos
+```
