@@ -1,45 +1,15 @@
-# ProgramOS
+# ProgramOS Developer Edition
 
-**ProgramOS** is a minimal, text-based operating system optimized for programmers. It is designed to run inside a Docker container and comes pre-installed with essential programming tools and terminal-based text editors.
+**ProgramOS Developer Edition** is an unstable, text-based OS designed for developers. It is based on Ubuntu's unstable branch and includes pre-installed programming tools, editors, and the ability to install GUI applications.
 
 ## Features
-- Lightweight and optimized for programming.
-- Includes the following terminal-based text editors:
-  - Nano
-  - Vim
-  - Emacs
-  - Micro
-  - Joe
-  - Ne (Nice Editor)
-  - Kilo (Tiny C-based editor)
-- Custom commands for file system management:
-  - `mkdir`: Create directories.
-  - `cf`: Create blank files (requires an extension).
-  - `cd`: Change directories.
-  - `ls`: List files and directories.
+- **Programming Language Support**: Python, Ruby, Perl, C, C++, C#, Java, JavaScript.
+- **Pre-installed Editors**: vim, nano, emacs, micro, joe, ne, and Visual Studio Code.
+- **GUI Application Support**: Simulated taskbar and launcher using Fluxbox and Tint2.
+- **Pre-configured Development Environment**: Directories for different languages.
 
 ## Installation
 
-### Prerequisites
-Ensure Docker is installed on your system. You can download Docker from [here](https://www.docker.com/).
-
 ### Build the Docker Image
-Clone this repository and navigate to the directory containing the `Dockerfile`. Then run:
 ```bash
-docker build -t programos .
-```
-
-### Run the Docker contianer
-After building the image, run:
-```bash
-docker run -it programos
-```
-
-### Remark
-If you use sudo docker [] then use:
-```bash
-sudo docker build -t programos .
-```
-```bash
-sudo docker run -it programos
-```
+docker build -t programos-dev .
